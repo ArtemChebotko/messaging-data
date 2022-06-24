@@ -6,29 +6,34 @@
 
 Execute the CQL script to insert sample data:
 ```
-SOURCE 'assets/sensor_data.cql'
+SOURCE 'assets/messaging_data.cql'
 ```
 
-Retrieve all rows from table `networks`:
+Retrieve all rows from table `folders_by_user`:
 ```
-SELECT * FROM networks;        
-```
-
-Retrieve all rows from table `temperatures_by_network`:
-```
-SELECT network, week, date_hour, 
-       sensor, avg_temperature 
-FROM temperatures_by_network;
+SELECT * FROM folders_by_user;        
 ```
 
-Retrieve all rows from table `sensors_by_network`:
+Retrieve all rows from table `unread_email_stats`:
 ```
-SELECT * FROM sensors_by_network;                    
+SELECT * FROM unread_email_stats;
 ```
 
-Retrieve all rows from table `temperatures_by_sensor`:
+Retrieve all rows from table `emails_by_user_folder`:
 ```
-SELECT * FROM temperatures_by_sensor; 
+SELECT * FROM emails_by_user_folder;                    
+```
+
+Retrieve all rows from table `emails`:
+```
+SELECT id, "to", "from" FROM emails; 
+SELECT id, subject, body FROM emails; 
+SELECT id, attachments FROM emails;
+```
+
+Retrieve all rows from table `attachments`:
+```
+SELECT * FROM attachments;       
 ```
 
 [continue](command:katapod.loadPage?step4){.orange_bar}

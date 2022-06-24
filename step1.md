@@ -9,9 +9,9 @@ Start the CQL shell:
 cqlsh
 ```
 
-Create the `sensor_data` keyspace:
+Create the `messaging_data` keyspace:
 ```
-CREATE KEYSPACE sensor_data
+CREATE KEYSPACE messaging_data
 WITH replication = {
   'class': 'NetworkTopologyStrategy', 
   'DC-Houston': 1 };
@@ -19,7 +19,7 @@ WITH replication = {
 
 Set the current working keyspace:
 ```
-USE sensor_data;
+USE messaging_data;
 ```
 
 [continue](command:katapod.loadPage?step2){.orange_bar}

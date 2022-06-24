@@ -4,54 +4,62 @@
 ### [◂](command:katapod.loadPage?step1){.steps} Step 2 of 7 [▸](command:katapod.loadPage?step3){.steps}
 </div>
 
-Create table `networks`:
+Create table `folders_by_user`:
 ```
-CREATE TABLE networks (
-  bucket TEXT,
-  name TEXT,
-  description TEXT,
-  region TEXT,
-  num_sensors INT,
-  PRIMARY KEY ((bucket),name)
+CREATE TABLE folders_by_user (
+  username TEXT,
+  label TEXT,
+  color TEXT,
+  PRIMARY KEY ((username),label)
 );
 ```
 
-Create table `temperatures_by_network`:
+Create table `unread_email_stats`:
 ```
-CREATE TABLE temperatures_by_network (
-  network TEXT,
-  week DATE,
-  date_hour TIMESTAMP,
-  sensor TEXT,
-  avg_temperature FLOAT,
-  latitude DECIMAL,
-  longitude DECIMAL,
-  PRIMARY KEY ((network,week),date_hour,sensor)
-) WITH CLUSTERING ORDER BY (date_hour DESC, sensor ASC);
-```
-
-Create table `sensors_by_network`:
-```
-CREATE TABLE sensors_by_network (
-  network TEXT,
-  sensor TEXT,
-  latitude DECIMAL,
-  longitude DECIMAL,
-  characteristics MAP<TEXT,TEXT>,
-  PRIMARY KEY ((network),sensor)
+CREATE TABLE unread_email_stats (
+  username TEXT,
+  label TEXT,
+  num_unread COUNTER,
+  PRIMARY KEY ((username),label)
 );
 ```
 
-
-Create table `temperatures_by_sensor`:
+Create table `emails_by_user_folder`:
 ```
-CREATE TABLE temperatures_by_sensor (
-  sensor TEXT,
-  date DATE,
-  timestamp TIMESTAMP,
-  value FLOAT,
-  PRIMARY KEY ((sensor,date),timestamp)
-) WITH CLUSTERING ORDER BY (timestamp DESC);
+CREATE TABLE emails_by_user_folder (
+  username TEXT,
+  label TEXT,
+  id TIMEUUID,
+  "from" TEXT,
+  subject TEXT,
+  is_read BOOLEAN,
+  PRIMARY KEY ((username,label),id)
+) WITH CLUSTERING ORDER BY (id DESC);
+```
+
+Create table `emails`:
+```
+CREATE TABLE emails (
+  id TIMEUUID,
+  "to" LIST<TEXT>,
+  "from" TEXT,
+  subject TEXT,
+  body TEXT,
+  attachments MAP<TEXT,INT>,
+  PRIMARY KEY ((id))
+);
+```
+
+Create table `attachments`:
+```
+CREATE TABLE attachments (
+  email_id TIMEUUID,
+  filename TEXT,
+  chunk_number INT,
+  type TEXT,
+  value BLOB,
+  PRIMARY KEY ((email_id,filename,chunk_number))
+);
 ```
 
 [continue](command:katapod.loadPage?step3){.orange_bar}
